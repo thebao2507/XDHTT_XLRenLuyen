@@ -7,6 +7,7 @@ import Danhsachhocky from "./component/admin/Danhsachhocky";
 import DashboardSV from "./pages/DashboardSV";
 import Page1 from "./component/Sinhvien/Page1";
 import Page2 from "./component/Sinhvien/Page2";
+import PaginateXLRL from "./component/Sinhvien/PaginateXLRL";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
             {
                 path: '/DashboardSV/page2',
                 element: <Page2 />
+            },
+            {
+                path: '/DashboardSV/WriteXLRL',
+                element: <PaginateXLRL />
             }
         ]
     }
