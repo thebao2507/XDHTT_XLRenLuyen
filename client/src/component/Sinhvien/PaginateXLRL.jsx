@@ -29,7 +29,7 @@ const PanigateXLRL = () => {
                     {/* Giao diện trang 3 */}
                 </div>
             )}
-            {currentPage === 3 && (
+            {currentPage === 3.1 && (
                 <div>
                     <h2>Trang 4</h2>
                     {/* Giao diện trang 4 */}
