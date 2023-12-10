@@ -1,8 +1,6 @@
 import React from 'react'
-import { AiOutlineDelete } from 'react-icons/ai'
-import { BiEdit } from 'react-icons/bi'
 
-const Danhsachhocky = () => {
+const DanhsachHDRL = () => {
     return (
         <div className="bg-white p-4 rounded-md w-full">
             <div className=" flex items-center justify-between pb-6">
@@ -12,7 +10,7 @@ const Danhsachhocky = () => {
                             <p className="block antialiased font-sans text-sm leading-normal text-blue-900 font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100">Dashboard</p>
                         </a>
                         <span className="text-gray-500 text-sm antialiased font-sans font-normal leading-normal mx-2 pointer-events-none select-none">/</span>
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Danh sach hoc ky - nam hoc</p>
+                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Danh sach hoat dong ren luyen</p>
                     </h2>
                 </div>
                 <div className="flex items-center justify-between">
@@ -42,15 +40,31 @@ const Danhsachhocky = () => {
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        HOC KY-NAM HOC
+                                        Hoat dong su kien
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Created at
+                                        Cap hoat dong
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Status
+                                        Diem
+                                    </th>
+                                    <th
+                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        T/G Dang Ky
+                                    </th>
+                                    <th
+                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        T/G Bat dau
+                                    </th>
+                                    <th
+                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Dia diem
+                                    </th>
+                                    <th
+                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Trang Thai
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -116,4 +130,4 @@ const Danhsachhocky = () => {
     )
 }
 
-export default Danhsachhocky
+export default DanhsachHDRL

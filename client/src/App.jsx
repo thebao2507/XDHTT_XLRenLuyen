@@ -5,9 +5,12 @@ import Dashboard from "./pages/Dashboard";
 import Thongke from "./component/admin/Thongke";
 import Danhsachhocky from "./component/admin/Danhsachhocky";
 import DashboardSV from "./pages/DashboardSV";
-import Page1 from "./component/Sinhvien/Page1";
-import Page2 from "./component/Sinhvien/Page2";
+import Hoatdong from "./component/Sinhvien/Hoatdong";
+import KetquaRL from "./component/Sinhvien/KetquaRL";
 import PaginateXLRL from "./component/Sinhvien/PaginateXLRL";
+import Thongbao from "./component/Sinhvien/Thongbao";
+import DanhsachHDRL from "./component/admin/DanhsachHDRL";
+import DashboardGV from "./pages/DashboardGV";
 
 const router = createBrowserRouter([
     {
@@ -25,26 +28,38 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/danhsachhocky',
                 element: <Danhsachhocky />
+            },
+            {
+                path: '/dashboard/danhsachhoatdongrenluyen',
+                element: <DanhsachHDRL />
             }
         ]
     },
     {
-        path: "/DashboardSV",
+        path: "/dashboardSV",
         element: <DashboardSV />,
         children: [
             {
-                path: '/DashboardSV/page1',
-                element: <Page1 />
+                path: '/dashboardSV/hoatdongrenluyen',
+                element: <Hoatdong />
             },
             {
-                path: '/DashboardSV/page2',
-                element: <Page2 />
+                path: '/dashboardSV/ketquarenluyen',
+                element: <KetquaRL />
             },
             {
-                path: '/DashboardSV/WriteXLRL',
+                path: '/dashboardSV/writeXLRL',
                 element: <PaginateXLRL />
+            },
+            {
+                path: '/dashboardSV/thongbao',
+                element: <Thongbao />
             }
         ]
+    },
+    {
+        path: '/dashboardGV',
+        element: <DashboardGV />
     }
 ])
 
