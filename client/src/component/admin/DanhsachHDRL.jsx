@@ -1,6 +1,67 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { BiEdit } from 'react-icons/bi'
+import axios from 'axios'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import { parse, format } from 'date-fns';
 
 const DanhsachHDRL = () => {
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [time, setTime] = useState(null);
+    const [tenhoatdong, setTenhoatdong] = useState('')
+    const [diadiem, setDiadiem] = useState('')
+    const [caphoatdong, setCaphoatdong] = useState('')
+    const [idhocki, setIdhocki] = useState(0)
+    const [dshd, setDshd] = useState([])
+    const datahocki = JSON.parse(localStorage.getItem('datahocki'))
+
+    //console.log(idhocki)
+
+    const convert = (str) => {
+        var date = new Date(str),
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+            day = ("0" + date.getDate()).slice(-2);
+        return [date.getFullYear(), mnth, day].join("/");
+    }
+
+    const pair = `${convert(startDate)}-${convert(endDate)}`
+
+    //console.log(convert(startDate))
+    const handleTaoHDSK = () => {
+        axios.post('http://localhost:5000/admin/taohdsk', {
+            tenhoatdong,
+            caphoatdong,
+            diadiem,
+            idhocki,
+            time,
+            pair
+        })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gửi đánh giá tới máy chủ:', error);
+            })
+        window.location.reload()
+    }
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/admin/laydshdsk')
+            .then((response) => {
+                const { data } = response
+                setDshd(data)
+            })
+            .catch((error) => {
+                console.log("lỗi khi lấy dữ liệu", error)
+            })
+    },)
+
+    let stt = 1
+
     return (
         <div className="bg-white p-4 rounded-md w-full">
             <div className=" flex items-center justify-between pb-6">
@@ -23,9 +84,95 @@ const DanhsachHDRL = () => {
                         </svg>
                         <input className="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
                     </div>
-                    <div className="lg:ml-40 ml-10 space-x-8">
-                        <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p className='mb-5 text-center'>Thêm hoạt động</p>
+                    <div className='my-2 flex w-full items-center justify-between'>
+                        <div className='flex items-center'>
+                            <label htmlFor="" className='w-2/3 font-semibold'>Tên Hoạt động</label>
+                            <input
+                                type="text"
+                                className="ml-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5 "
+                                onChange={e => setTenhoatdong(e.target.value)}
+                            />
+                        </div>
+                        <div className='flex items-center'>
+                            <label htmlFor="" className='w-[150px] font-semibold'>Cấp hoạt động</label>
+                            <select
+                                id="countries"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sx rounded-lg w-3/4 p-1.5 "
+                                onChange={e => setCaphoatdong(e.target.value)}
+                            >
+                                <option selected>Chọn cấp hoạt động</option>
+                                <option value="Cấp tỉnh">Cấp tỉnh</option>
+                                <option value="Cấp trường">Cấp trường</option>
+                                <option value="Cấp khoa">Cấp khoa</option>
+                                <option value="Cấp lớp">Cấp lớp</option>
+                            </select>
+                        </div>
+                        <div className='flex items-center'>
+                            <label className='w-1/3 font-semibold'>Địa điểm</label>
+                            <input
+                                type="text"
+                                className="ml-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-3/4 p-1.5 "
+                                onChange={e => setDiadiem(e.target.value)}
+                            />
+                        </div>
                     </div>
+                    <div>
+                        <div className='my-2 flex items-center justify-between'>
+                            <div className='flex items-center'>
+                                <label className='font-semibold'>Từ ngày:</label>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={date => setStartDate(date)}
+                                    className='bg-gray-100 ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5'
+                                    dateFormat="yyyy/MM/dd"
+                                />
+                            </div>
+
+                            <div className='flex items-center'>
+                                <label className='font-semibold'>Đến ngày:</label>
+                                <DatePicker
+                                    selected={endDate}
+                                    onChange={date => setEndDate(date)}
+                                    className='bg-gray-100 ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5'
+                                    dateFormat="yyyy/MM/dd"
+                                />
+                            </div>
+                            <div className='flex items-center '>
+                                <label className='mr-2 font-semibold'>Thời gian:</label>
+                                <TimePicker
+                                    value={time}
+                                    onChange={setTime}
+                                />
+                            </div>
+                            <div className='flex items-center w-[180px]'>
+                                <label htmlFor="" className='font-semibold'>HK-NH</label>
+                                <select
+                                    id="countries"
+                                    className="ml-1 bg-gray-50 border border-gray-300 text-gray-900 text-sx rounded-lg w-2/3 p-1.5 "
+                                    onChange={e => setIdhocki(e.target.value)}
+                                >
+                                    {
+                                        datahocki.map(item => (
+                                            <option value={item.id}>{item.hocki} {item.namhoc}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="text-center">
+                    <button
+                        className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                        onClick={handleTaoHDSK}
+                    >
+                        Create
+                    </button>
                 </div>
             </div>
             <div>
@@ -35,7 +182,7 @@ const DanhsachHDRL = () => {
                             <thead>
                                 <tr>
                                     <th
-                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        className="px-2 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         STT
                                     </th>
                                     <th
@@ -48,15 +195,11 @@ const DanhsachHDRL = () => {
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Diem
+                                        Ngay dien ra
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        T/G Dang Ky
-                                    </th>
-                                    <th
-                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        T/G Bat dau
+                                        T/G dien ra
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -73,56 +216,58 @@ const DanhsachHDRL = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <div className="flex items-center">
-                                            <div className="ml-3">
+                                {
+                                    dshd.map(item => (
+                                        <tr>
+                                            <td className="px-1 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <div className="flex items-center">
+                                                    <div className="ml-3">
+                                                        <p className="text-gray-900 whitespace-no-wrap">
+                                                            {stt++}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">{item.tenhoatdong}</p>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p className="text-gray-900 whitespace-no-wrap">
-                                                    1
+                                                    {item.caphoatdong}
                                                 </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p className="text-gray-900 whitespace-no-wrap">Hoc ky 1- Nam hoc 2022- 2023</p>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p className="text-gray-900 whitespace-no-wrap">
-                                            01/01/2022
-                                        </p>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <span
-                                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden
-                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                            <span className="relative">Activo</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
-                                        <button classNameName='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
-                                        <button classNameName='text-2xl'><BiEdit className='text-xl' /></button>
-                                    </td>
-                                </tr>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                    {item.ngaydienra}
+                                                </p>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                    {item.thoigiandienra}
+                                                </p>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                    {item.diadiem}
+                                                </p>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <span
+                                                    className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                    <span aria-hidden
+                                                        className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                    <span className="relative">Activo</span>
+                                                </span>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                                                <button className='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
+                                                <button className='text-2xl'><BiEdit className='text-xl' /></button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
-                        <div
-                            className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                            <span className="text-xs xs:text-sm text-gray-900">
-                                Showing 1 to 4 of 50 Entries
-                            </span>
-                            <div className="inline-flex mt-2 xs:mt-0">
-                                <button
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                                    Prev
-                                </button>
-                                &nbsp; &nbsp;
-                                <button
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

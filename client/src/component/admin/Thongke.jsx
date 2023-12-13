@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
 import { PiStudent } from "react-icons/pi"
 import { SiGoogleclassroom } from 'react-icons/si'
 import { FaChalkboardTeacher } from 'react-icons/fa'
+import axios from 'axios'
 
 const Thongke = () => {
+    const [studentCount, setStudentCount] = useState(0)
+    const [teacherCount, setTeacherCount] = useState(0)
+    const [lopCount, setLopCount] = useState(0)
+    const [userCount, setUserCount] = useState(0)
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/admin/counts')
+        .then((response) => {
+            const {studentCount, teacherCount, lopCount, userCount} = response.data
+            setStudentCount(studentCount)
+            setTeacherCount(teacherCount)
+            setLopCount(lopCount)
+            setUserCount(userCount)
+        })
+        .catch((error) => {
+            console.log("lỗi khi lấy dữ liệu", error)
+        })
+    })
+
     return (
         <div>
             <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
@@ -43,7 +63,7 @@ const Thongke = () => {
                         </div>
                         <div className="p-4 text-right">
                             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Total users</p>
-                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">140000</h4>
+                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{userCount}</h4>
                         </div>
                     </div>
                     <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
@@ -52,7 +72,7 @@ const Thongke = () => {
                         </div>
                         <div className="p-4 text-right">
                             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Total student</p>
-                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">13300</h4>
+                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{studentCount}</h4>
                         </div>
                     </div>
                     <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
@@ -61,7 +81,7 @@ const Thongke = () => {
                         </div>
                         <div className="p-4 text-right">
                             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Total class</p>
-                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">462</h4>
+                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{lopCount}</h4>
                         </div>
 
                     </div>
@@ -71,7 +91,7 @@ const Thongke = () => {
                         </div>
                         <div className="p-4 text-right">
                             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Total CB-GV</p>
-                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">700</h4>
+                            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{teacherCount}</h4>
                         </div>
 
                     </div>

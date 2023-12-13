@@ -1,8 +1,40 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { BiEdit } from 'react-icons/bi'
+import axios from 'axios'
 
 const Danhsachhocky = () => {
+    const namhocs = ["2020-2021", "2021-2022", "2022-2023", "2023-2024"]
+    const [hocki, setHocki] = useState('')
+    const [namhoc, setNamhoc] = useState('')
+
+    const [dshk, setDshk] = useState([])
+
+    const handletaodshk = () => {
+        axios.post('http://localhost:5000/admin/taods', { hocki, namhoc })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gửi đánh giá tới máy chủ:', error);
+            })
+        window.location.reload()
+    }
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/admin/laydshk')
+            .then((response) => {
+                const { data } = response
+                setDshk(data)
+                localStorage.setItem('datahocki', JSON.stringify(data))
+            })
+            .catch((error) => {
+                console.log("lỗi khi lấy dữ liệu", error)
+            })
+    },)
+
+    let stt = 1
+
     return (
         <div className="bg-white p-4 rounded-md w-full">
             <div className=" flex items-center justify-between pb-6">
@@ -15,18 +47,29 @@ const Danhsachhocky = () => {
                         <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Danh sach hoc ky - nam hoc</p>
                     </h2>
                 </div>
-                <div className="flex items-center justify-between">
-                    <div className="flex bg-gray-50 items-center p-2 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fillRule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clipRule="evenodd" />
-                        </svg>
-                        <input className="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
+                <div className="flex items-center">
+                    <div className="flex bg-gray-50 items-center p-2 rounded-md ml-[10px]">
+                        <input
+                            className="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" value={hocki} placeholder="nhập tên học kì..."
+                            onChange={e => setHocki(e.target.value)}
+                        />
+                        <select name="" id="" onChange={e => setNamhoc(e.target.value)}>
+                            {
+                                namhocs.map(item => (
+                                    <option value={item}>
+                                        {item}
+                                    </option>
+                                ))
+                            }
+                        </select>
                     </div>
                     <div className="lg:ml-40 ml-10 space-x-8">
-                        <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
+                        <button
+                            className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                            onClick={handletaodshk}
+                        >
+                            Create
+                        </button>
                     </div>
                 </div>
             </div>
@@ -42,15 +85,15 @@ const Danhsachhocky = () => {
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        HOC KY-NAM HOC
+                                        Hoc ky
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Created at
+                                        Nam hoc
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Status
+                                        Trang thai
                                     </th>
                                     <th
                                         className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -59,56 +102,44 @@ const Danhsachhocky = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <div className="flex items-center">
-                                            <div className="ml-3">
+                                {
+                                    dshk.map(item => (
+                                        <tr>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <div className="flex items-center">
+                                                    <div className="ml-3">
+                                                        <p className="text-gray-900 whitespace-no-wrap">
+                                                            {stt++}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p className="text-gray-900 whitespace-no-wrap">{item.hocki}</p>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <p className="text-gray-900 whitespace-no-wrap">
-                                                    1
+                                                    {item.namhoc}
                                                 </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p className="text-gray-900 whitespace-no-wrap">Hoc ky 1- Nam hoc 2022- 2023</p>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p className="text-gray-900 whitespace-no-wrap">
-                                            01/01/2022
-                                        </p>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <span
-                                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden
-                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                            <span className="relative">Activo</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
-                                        <button classNameName='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
-                                        <button classNameName='text-2xl'><BiEdit className='text-xl' /></button>
-                                    </td>
-                                </tr>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <span
+                                                    className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                    <span aria-hidden
+                                                        className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                    <span className="relative">Activo</span>
+                                                </span>
+                                            </td>
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                                                <button className='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
+                                                <button className='text-2xl'><BiEdit className='text-xl' /></button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
-                        <div
-                            className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                            <span className="text-xs xs:text-sm text-gray-900">
-                                Showing 1 to 4 of 50 Entries
-                            </span>
-                            <div className="inline-flex mt-2 xs:mt-0">
-                                <button
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                                    Prev
-                                </button>
-                                &nbsp; &nbsp;
-                                <button
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

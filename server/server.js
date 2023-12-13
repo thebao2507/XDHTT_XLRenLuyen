@@ -48,6 +48,9 @@ app.get('/giaovien/:magv/laydanhsachsv', (req, res) => {
     });
 });
 
+
+// truy vấn sinh vien
+
 app.post('/sinhvien/xlrl', async (req, res) => {
     //console.log(req.body.items)
     const { username, totalScore, totallopdanhgia, items } = req.body
@@ -106,6 +109,88 @@ app.post('/sinhvien/xlrl', async (req, res) => {
     //console.log(req.body)
 })
 
+/// truy vấn dmin
+
+app.get('/admin/counts', (req, res) => {
+    const sqlGetCount = `SELECT 
+                            (SELECT COUNT(*) FROM students) AS sc,
+                            (SELECT COUNT(*) FROM teachers) AS tc,
+                            (SELECT COUNT(*) FROM lop) AS lc,
+                            (SELECT COUNT(*) FROM users) AS uc
+                        `
+    con.query(sqlGetCount, (err, data) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        const studentCount = data[0].sc
+        const teacherCount = data[0].tc
+        const lopCount = data[0].lc
+        const userCount = data[0].uc
+
+        res.json({ studentCount, teacherCount, lopCount, userCount })
+    })
+})
+
+app.post('/admin/taods', (req, res) => {
+    const { hocki, namhoc } = req.body
+    const sqlthemdshk = 'INSERT INTO semester (hocki, namhoc) VALUES (?, ?)'
+    con.query(sqlthemdshk, [hocki, namhoc], (err, data) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+
+        res.json("thêm dữ liệu thành công")
+    })
+})
+
+app.get('/admin/laydshk', (req, res) => {
+    const sql = 'SELECT * FROM semester'
+    con.query(sql, (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+
+        res.json(results);
+    })
+})
+
+
+app.post('/admin/taohdsk', (req, res) => {
+    const { tenhoatdong,
+        caphoatdong,
+        diadiem,
+        idhocki,
+        time,
+        pair
+    } = req.body
+    const sql = 'INSERT INTO activities (tenhoatdong, caphoatdong, ngaydienra, thoigiandienra, diadiem, hocki_id) VALUES (?, ?, ?, ?, ?, ?)'
+    con.query(sql, [tenhoatdong, caphoatdong, pair, time, diadiem, idhocki], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        res.json("thêm dữ liệu thành công")
+    })
+})
+
+app.get('/admin/laydshdsk', (req, res) => {
+    const sql = 'SELECT * FROM activities'
+    con.query(sql, (err, result) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        res.json(result)
+    })
+})
 
 
 const port = 5000;

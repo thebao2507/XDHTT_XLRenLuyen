@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 const DashboardGV = () => {
+
     return (
-        <div>DashboardGV</div>
+        <div className=''>
+            <p>con cặt</p>
+        </div>
     )
 }
 

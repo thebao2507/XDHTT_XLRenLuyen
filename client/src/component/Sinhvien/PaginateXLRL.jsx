@@ -282,7 +282,7 @@ const PanigateXLRL = () => {
                                                     onChange={(e) =>
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'studentScore')
                                                     }
-                                                    className='w-full h-5/6 rounded-md py-full text-gray-900'
+                                                    className='w-full py-1.5 rounded-md text-gray-900 bg-[#EBE7E6]'
                                                 />
                                             </td>
                                             <td className='w-[5%] border-2'>
@@ -293,7 +293,7 @@ const PanigateXLRL = () => {
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'lopdanhgia')
                                                     }
                                                     readOnly
-                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900'
+                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
                                                 />
                                             </td>
                                             <td className='w-[22%] border-2'>
@@ -303,7 +303,7 @@ const PanigateXLRL = () => {
                                                     onChange={(e) =>
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'note')
                                                     }
-                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900'
+                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
                                                 />
                                             </td>
                                         </tr>
