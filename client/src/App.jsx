@@ -6,16 +6,22 @@ import Thongke from "./component/admin/Thongke";
 import Danhsachhocky from "./component/admin/Danhsachhocky";
 import DashboardSV from "./pages/DashboardSV";
 import Hoatdong from "./component/Sinhvien/Hoatdong";
-import KetquaRL from "./component/Sinhvien/KetquaRL";
 import PaginateXLRL from "./component/Sinhvien/PaginateXLRL";
 import Thongbao from "./component/Sinhvien/Thongbao";
 import DanhsachHDRL from "./component/admin/DanhsachHDRL";
 import DashboardGV from "./pages/DashboardGV";
+import DSSV from "./component/giangvien/DSSV";
+import ForgotPass from "./component/yuki/ForgotPass";
+import ThongbaoSV from "./component/giangvien/ThongbaoSV";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Login />
+    },
+    {
+        path: '/forgotpassword',
+        element: <ForgotPass />
     },
     {
         path: "/dashboard",
@@ -44,10 +50,6 @@ const router = createBrowserRouter([
                 element: <Hoatdong />
             },
             {
-                path: '/dashboardSV/ketquarenluyen',
-                element: <KetquaRL />
-            },
-            {
                 path: '/dashboardSV/writeXLRL',
                 element: <PaginateXLRL />
             },
@@ -59,7 +61,17 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboardGV',
-        element: <DashboardGV />
+        element: <DashboardGV />,
+        children: [
+            {
+                path: '/dashboardGV/dssv',
+                element: <DSSV />
+            },
+            {
+                path: '/dashboardGV/thongbaosv',
+                element: <ThongbaoSV />
+            }
+        ]
     }
 ])
 

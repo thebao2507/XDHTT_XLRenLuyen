@@ -2,9 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { CiLogout } from 'react-icons/ci'
 import { BsCardChecklist } from 'react-icons/bs'
-import { MdOutlineRateReview, MdOutlineNotificationsActive, MdOutlineMedicalInformation  } from "react-icons/md"
+import { useNavigate } from 'react-router-dom';
+import { MdOutlineRateReview, MdOutlineNotificationsActive, MdOutlineMedicalInformation } from "react-icons/md"
 
 const MenuSV = ({ user }) => {
+    const nav = useNavigate()
+    const dangxuat = () => {
+        localStorage.removeItem('user')
+        nav('/', { replace: true })
+    }
+
     return (
         <aside className="bg-gradient-to-br from-gray-800 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-56 rounded-xl transition-transform duration-300 xl:translate-x-0">
             <div className="relative border-b border-white/20">
@@ -19,7 +26,7 @@ const MenuSV = ({ user }) => {
                         <Link className="" to="/dashboardSV/thongbao">
                             <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <h3 className='text-2xl'><MdOutlineMedicalInformation /></h3>
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Thông tin SV</p>
+                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Trang chính</p>
                             </button>
                         </Link>
                     </li>
@@ -27,15 +34,7 @@ const MenuSV = ({ user }) => {
                         <Link aria-current="page" to='/dashboardSV/writeXLRL'>
                             <button className="middle none font-sans font-bold center transition-all  text-xs py-3 rounded-lg to-blue-400 text-white shadow-md hover:shadow-l w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10 active:bg-white/30" type="button">
                                 <h3 className='text-2xl'><MdOutlineRateReview /></h3>
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Danh Gia DRL</p>
-                            </button>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="" to='/dashboardSV/ketquarenluyen'>
-                            <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
-                                <h3 className='text-xl'><BsCardChecklist /></h3>
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Ket Qua DRL</p>
+                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Đánh Giá DRL</p>
                             </button>
                         </Link>
                     </li>
@@ -55,12 +54,16 @@ const MenuSV = ({ user }) => {
                         <p className="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">Khac</p>
                     </li>
                     <li>
-                        <Link className="" href="ccc">
-                            <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div className="">
+                            <button
+                                className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+                                type="button"
+                                onClick={dangxuat}
+                            >
                                 <h3 className='text-2xl'><CiLogout /></h3>
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Dang xuat</p>
+                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Đăng Xuất</p>
                             </button>
-                        </Link>
+                        </div>
                     </li>
                 </ul>
             </div>

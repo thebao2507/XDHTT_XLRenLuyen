@@ -3,9 +3,16 @@ import { Link } from 'react-router-dom'
 import { BiCategory } from 'react-icons/bi'
 import { CiLogout } from 'react-icons/ci'
 import { BsCardChecklist } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
 const Menu = () => {
     const user = JSON.parse(localStorage.getItem('user'))
+
+    const nav = useNavigate()
+    const dangxuat = () => {
+        localStorage.removeItem('user')
+        nav('/', { replace: true })
+    }
 
     return (
         <aside className="bg-gradient-to-br from-gray-800 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
@@ -59,12 +66,16 @@ const Menu = () => {
                         <p className="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">Khac</p>
                     </li>
                     <li>
-                        <Link className="" href="#">
-                            <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div className="">
+                            <button
+                                className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+                                type="button"
+                                onClick={dangxuat}
+                            >
                                 <h3 className='text-2xl'><CiLogout /></h3>
                                 <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Dang xuat</p>
                             </button>
-                        </Link>
+                        </div>
                     </li>
                 </ul>
             </div>

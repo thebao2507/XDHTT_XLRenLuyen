@@ -1,0 +1,6 @@
+SELECT COALESCE(thongbao.tieude, 'chưa có nội dung') AS tieude, COALESCE(thongbao.noidung, 'chưa có thông báo') AS noidung 
+FROM students
+LEFT JOIN lop ON students.lop_id = lop.id
+LEFT JOIN thongbao ON thongbao.magv = lop.magiaovienchunhiem
+WHERE students.masv = '4351010004';
+

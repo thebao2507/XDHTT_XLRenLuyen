@@ -34,26 +34,74 @@ app.post('/login', (req, res) => {
     })
 });
 
-app.get('/giaovien/:magv/laydanhsachsv', (req, res) => {
-    // Truy vấn tất cả các dòng trong bảng
-    const sql = 'SELECT s.* FROM students s INNER JOIN lop l ON s.lop_id = l.id WHERE l.magiaovienchunhiem = ?'
+app.get('/giaovien/laythongbao/:magv', (req, res) => {
+    const sql = 'SELECT * FROM thongbao WHERE magv = ?;'
     con.query(sql, [req.params.magv], (err, results) => {
         if (err) {
             console.error('Lỗi khi truy vấn dữ liệu:', err);
             res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
             return;
         }
+        //console.log(results)
+        res.json(results);
+    });
+})
 
+app.delete('/giaovien/xoathongbao/:magv', (req, res) => {
+    const sql = 'DELETE FROM thongbao WHERE magv = ?'
+    //console.log(req.params.magv)
+    con.query(sql, [req.params.magv], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        //console.log(results)
+        res.json("xóa thành công")
+    });
+})
+
+app.get('/giaovien/laydssv/:magv', (req, res) => {
+    // Truy vấn tất cả các dòng trong bảng
+    const sql = `SELECT students.*, lop_students.tenlop, 
+                COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
+                COALESCE(tongdiem.totaltapthedanhgia, 'chưa nhập điểm') AS totaltapthedanhgia
+                FROM students
+                JOIN lop AS lop_students ON students.lop_id = lop_students.id
+                JOIN teachers ON teachers.magv = lop_students.magiaovienchunhiem
+                LEFT JOIN tongdiem ON students.masv = tongdiem.username
+                WHERE teachers.magv = ?;`
+    con.query(sql, [req.params.magv], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        //console.log(results)
         res.json(results);
     });
 });
+
+app.post('/giaovien/thongbaosv', (req, res) => {
+    const { magv, title, textContent } = req.body
+    const sql = 'INSERT INTO thongbao (magv, tieude, noidung) VALUES (?, ?, ?)'
+    con.query(sql, [magv, title, textContent], (err, data) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+
+        res.json("thêm dữ liệu thành công")
+    })
+})
 
 
 // truy vấn sinh vien
 
 app.post('/sinhvien/xlrl', async (req, res) => {
     //console.log(req.body.items)
-    const { username, totalScore, totallopdanhgia, items } = req.body
+    const { username, totalScore, totallopdanhgia, items, hocki, namhoc } = req.body
     // lưu vào table chitietxeploai
     const sqlChitiet = 'INSERT INTO chitietxeploairenluyen (username, iddsm, studentScore, lopdanhgia, ghichu) VALUES (?, ?, ?, ?, ?)'
     try {
@@ -80,10 +128,10 @@ app.post('/sinhvien/xlrl', async (req, res) => {
             })
         })
 
-        const sqlTongdiem = 'INSERT INTO tongdiem (username, totalScore, totaltapthedanhgia) VALUES (?, ?, ?)';
+        const sqlTongdiem = 'INSERT INTO tongdiem (username, totalScore, totaltapthedanhgia, hocki, namhoc) VALUES (?, ?, ?, ?, ?)';
         const inserttongdiem = () => {
             return new Promise((resolve, reject) => {
-                con.query(sqlTongdiem, [username, totalScore, totallopdanhgia], (err, results) => {
+                con.query(sqlTongdiem, [username, totalScore, totallopdanhgia, hocki, namhoc], (err, results) => {
                     if (err) {
                         reject(err);
                         return;
@@ -109,6 +157,39 @@ app.post('/sinhvien/xlrl', async (req, res) => {
     //console.log(req.body)
 })
 
+app.get('/sinhvien/laythongtin/:masv', (req, res) => {
+    const sql = "SELECT lop.tenlop, nganh.tennganh FROM students JOIN lop ON students.lop_id = lop.id JOIN nganh ON lop.nganh_id = nganh.id WHERE students.masv = ?"
+    const masv = req.params.masv
+    //console.log(typeof(masv))
+    con.query(sql, masv, (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        //console.log(results)
+        res.json(results);
+    });
+})
+
+app.get('/sinhvien/laythongbao/:masv', (req, res) => {
+    const sql = `SELECT COALESCE(thongbao.tieude, 'chưa có nội dung') AS tieude, COALESCE(thongbao.noidung, 'chưa có thông báo') AS noidung 
+    FROM students
+    LEFT JOIN lop ON students.lop_id = lop.id
+    LEFT JOIN thongbao ON thongbao.magv = lop.magiaovienchunhiem
+    WHERE students.masv = ?`
+    const masv = req.params.masv
+    //console.log(typeof(masv))
+    con.query(sql, masv, (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        //console.log(results)
+        res.json(results);
+    });
+})
 /// truy vấn dmin
 
 app.get('/admin/counts', (req, res) => {

@@ -83,6 +83,10 @@ const PanigateXLRL = () => {
         totaltapthelopdanhgia: 0
     });
 
+    const [hocki, setHocki] = useState('')
+    const [namhoc, setNamhoc] = useState('')
+
+
     const calculateTotal = (items) => {
         let total = 0;
         items.forEach((item) => {
@@ -131,6 +135,8 @@ const PanigateXLRL = () => {
             username: user[0].username,
             totalScore: form.totalScore,
             totallopdanhgia: form.totaltapthelopdanhgia,
+            hocki: hocki,
+            namhoc: namhoc,
             items: form.items.reduce((acc, item) => {
                 const dsmData = item.dsm.map((dsmItem) => ({
                     iddsm: dsmItem.iddsm,
@@ -163,18 +169,18 @@ const PanigateXLRL = () => {
             <div>
                 <h1 className='font-bold text-center text-2xl'>PHIẾU ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN SINH VIÊN</h1>
                 <div className='flex items-center justify-center'>
-                    <div className='pr-10'>
-                        <h3>HỌC KỲ: 2</h3>
+                    <div className='pl-20'>
+                        <h3>HỌC KỲ: <input type="text" value={hocki} onChange={e => setHocki(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' /></h3>
                     </div>
                     <div>
-                        <h3>NĂM HỌC: 2023 - 2024</h3>
+                        <h3>NĂM HỌC: <input type="text" value={namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' /></h3>
                     </div>
                 </div>
                 <div className='flex translate-x-[15%] justify-between py-2 w-[80%]'>
-                    <div className='flex items-center'>
-                        <p className='pr-2'>Họ tên sinh viên: </p>
+                    <div className='flex items-center w-[50%]'>
+                        <p className='pr-2 w-[180px]'>Họ tên sinh viên: </p>
                         <input
-                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full  px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
                             type="text" name="" id="" value={user[0].tensv} readOnly
                         />
                     </div>
@@ -191,21 +197,21 @@ const PanigateXLRL = () => {
                         <p className='pr-2'>Ngành học: </p>
                         <input
                             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value="Công nghệ thông tin" readOnly
+                            type="text" name="" id=""
                         />
                     </div>
                     <div className='px-4 flex items-center w-[200px]'>
                         <p className='pr-2'>Khóa: </p>
                         <input
                             className='w-[100px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value="43" readOnly
+                            type="text" name="" id=""
                         />
                     </div>
                     <div className='px-4 flex items-center'>
                         <p className='pr-2'>Lớp sinh hoạt: </p>
                         <input
                             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value="CNTT K43D" readOnly
+                            type="text" name="" id=""
                         />
                     </div>
                 </div>
@@ -313,19 +319,22 @@ const PanigateXLRL = () => {
                         </tbody>
                     </table>
                 </div>
-                <div>
-                    <div>Total Score: {form.totalScore}  {form.totaltapthelopdanhgia}</div>
+                <div className='flex items-center justify-between mt-2'>
                     <div>
                         {trangthai === 'true' ? (
-                            <p>đã lưu rồi</p>
+                            <p className='text-green-500'>Đã lưu rồi</p>
                         ) : (
                             <>
-                                <button onClick={handleSubmit}>lưu</button>
-                                <p>{trangthai}</p>
+                                <button
+                                    onClick={handleSubmit}
+                                    className='text-gray-900 bg-white border border-gray-300 font-medium rounded-lg text-sx px-6 py-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:border-gray-600'>
+                                    Save
+                                </button>
                             </>
                         )
                         }
                     </div>
+                    <div className='font-semibold text-xl'>Tổng điểm: {form.totalScore}</div>
                 </div>
             </div>
 
