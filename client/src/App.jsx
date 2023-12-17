@@ -13,6 +13,9 @@ import DashboardGV from "./pages/DashboardGV";
 import DSSV from "./component/giangvien/DSSV";
 import ForgotPass from "./component/yuki/ForgotPass";
 import ThongbaoSV from "./component/giangvien/ThongbaoSV";
+import QLDSDRL from "./component/Sinhvien/componentCBL/QLDSDRL";
+import DSHDLop from "./component/Sinhvien/componentCBL/DSHDLop";
+import Chitiet from "./component/Sinhvien/componentCBL/Chitiet";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +25,10 @@ const router = createBrowserRouter([
     {
         path: '/forgotpassword',
         element: <ForgotPass />
+    },
+    {
+        path: '/dashboardSV/chitietdanhgia/:masv',
+        element: <Chitiet />
     },
     {
         path: "/dashboard",
@@ -56,6 +63,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboardSV/thongbao',
                 element: <Thongbao />
+            },
+            {
+                path: '/dashboardSV/qldsdrl',
+                element: <QLDSDRL />
+            },
+            {
+                path: '/dashboardSV/qldshd',
+                element: <DSHDLop />
             }
         ]
     },

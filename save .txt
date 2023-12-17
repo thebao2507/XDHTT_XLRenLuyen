@@ -4,3 +4,10 @@ LEFT JOIN lop ON students.lop_id = lop.id
 LEFT JOIN thongbao ON thongbao.magv = lop.magiaovienchunhiem
 WHERE students.masv = '4351010004';
 
+SELECT students.*, lop_students.tenlop, 
+       COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
+       COALESCE(tongdiem.totaltapthedanhgia, 'chưa nhập điểm') AS totaltapthedanhgia
+FROM students
+JOIN lop AS lop_students ON students.lop_id = lop_students.id
+LEFT JOIN tongdiem ON students.masv = tongdiem.username
+WHERE tongdiem.hocki = 'học kì I' AND tongdiem.namhoc = '2023-2024'

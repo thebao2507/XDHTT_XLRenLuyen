@@ -61,6 +61,7 @@ const LoginSinhVien = () => {
                                     <label className="block text-black">Username</label>
                                     <input
                                         type="text"
+                                        required
                                         className="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full"
                                         placeholder="Username"
                                         value={username}
@@ -71,6 +72,7 @@ const LoginSinhVien = () => {
                                     <label className="block text-black">Password</label>
                                     <input
                                         type="password"
+                                        required
                                         className="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full"
                                         placeholder="Password"
                                         value={password}

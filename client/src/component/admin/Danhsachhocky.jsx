@@ -10,8 +10,9 @@ const Danhsachhocky = () => {
 
     const [dshk, setDshk] = useState([])
 
+
     const handletaodshk = () => {
-        axios.post('http://localhost:5000/admin/taods', { hocki, namhoc })
+        axios.post('http://localhost:5000/admin/taods', { hocki, namhoc, trangthai: 'pending' })
             .then((response) => {
                 console.log(response.data);
             })
@@ -20,6 +21,20 @@ const Danhsachhocky = () => {
             })
         window.location.reload()
     }
+
+    const handleDanhdauhoanthanh = (id) => {
+        const id_1 = id
+        axios.post('http://localhost:5000/admin/danhdauhoanthanh', { id_1, trangthai: 'success' })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gửi đánh giá tới máy chủ:', error);
+            })
+        window.location.reload()
+    }
+
+
 
     useEffect(() => {
         axios.get('http://localhost:5000/admin/laydshk')
@@ -125,14 +140,26 @@ const Danhsachhocky = () => {
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <span
                                                     className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                                    <span aria-hidden
-                                                        className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                    <span className="relative">Activo</span>
+                                                    {
+                                                        item.trangthai === 'pending' ? (
+                                                            <>
+                                                                <span aria-hidden
+                                                                    className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
+                                                                <span className="relative">{item.trangthai}</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <span aria-hidden
+                                                                    className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                                <span className="relative">{item.trangthai}</span>
+                                                            </>
+                                                        )
+                                                    }
                                                 </span>
                                             </td>
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
                                                 <button className='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
-                                                <button className='text-2xl'><BiEdit className='text-xl' /></button>
+                                                <button className='text-2xl' onClick={() => handleDanhdauhoanthanh(item.id)} ><BiEdit className='text-xl' /></button>
                                             </td>
                                         </tr>
                                     ))

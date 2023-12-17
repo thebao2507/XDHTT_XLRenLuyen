@@ -170,10 +170,10 @@ const PanigateXLRL = () => {
                 <h1 className='font-bold text-center text-2xl'>PHIẾU ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN SINH VIÊN</h1>
                 <div className='flex items-center justify-center'>
                     <div className='pl-20'>
-                        <h3>HỌC KỲ: <input type="text" value={hocki} onChange={e => setHocki(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' /></h3>
+                        <h3>HỌC KỲ: <input type="text" value={hocki} onChange={e => setHocki(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required/></h3>
                     </div>
                     <div>
-                        <h3>NĂM HỌC: <input type="text" value={namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' /></h3>
+                        <h3>NĂM HỌC: <input type="text" value={namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required/></h3>
                     </div>
                 </div>
                 <div className='flex translate-x-[15%] justify-between py-2 w-[80%]'>

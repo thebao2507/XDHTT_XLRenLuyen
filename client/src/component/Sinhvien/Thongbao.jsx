@@ -191,7 +191,7 @@ const Thongbao = () => {
             </div>
             {/*phần giáo viên thông báo cho sinh viên*/}
             <div>
-                <p className='border-b border-black font-semibold text-xl my-5'>Thông báo của giáo viên</p>
+                <p className='border-b border-black font-semibold text-xl my-5'>Thông báo đến lớp của giáo viên</p>
                 <div className='ml-2'>
                     {
                         thongbao.length > 0 ? (

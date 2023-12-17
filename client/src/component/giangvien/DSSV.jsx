@@ -5,13 +5,18 @@ const DSSV = () => {
     const [dssv, setDssv] = useState([])
     const user = JSON.parse(localStorage.getItem('user'))
     const [handleNX, setHandleNX] = useState(false)
+    const [tt, setTt] = useState({})
+
+    const datahoc = JSON.parse(localStorage.getItem('datahocki'));
+    const cc = datahoc.filter(item => item.trangthai === 'pending')
+    //console.log(cc[0].h)
+    //console.log(tt)
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/giaovien/laydssv/${user[0].magv}`)
+        axios.get(`http://localhost:5000/giaovien/laydssv/${user[0].magv}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
             .then((response) => {
                 const { data } = response
                 setDssv(data)
-                //console.log(data)
             })
             .catch((error) => {
                 console.log("lỗi khi lấy dữ liệu", error)
@@ -19,8 +24,10 @@ const DSSV = () => {
     })
 
 
-    const handleClickNX = () => {
+    const handleClickNX = (item) => {
+        const sinhvien = item
         setHandleNX(true)
+        setTt(sinhvien)
     }
 
     const handleHide = () => {
@@ -32,14 +39,17 @@ const DSSV = () => {
 
     return (
         <div className=''>
+            <div className='my-2'>
+                <p className='font-semibold text-xl'>{cc[0].hocki} năm học: {cc[0].namhoc}</p>
+            </div>
             {
                 handleNX === false ? (
                     <>
                     </>
                 ) : (
                     <div className='flex items-center mb-4'>
-                        <p className='mx-1 w-[20%] text-sx font-semibold'>Nhận xét sinh viên :</p>
-                        <input type="text" name="" id=""  className='mx-1 w-full py-1.5 bg-gray-200 border border-gray-500 text-gray-900 rounded-lg '/>
+                        <p className='mx-1 w-[30%] text-sx font-semibold'>Nhận xét sinh viên {tt.tensv} :</p>
+                        <input type="text" name="" id="" className='mx-1 w-full py-1.5 bg-gray-200 border border-gray-500 text-gray-900 rounded-lg ' />
                         <button onClick={handleHide} className='mx-1 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-6 py-2 text-center'>Ẩn</button>
                     </div>
                 )
@@ -68,7 +78,7 @@ const DSSV = () => {
                                 <td className="whitespace-nowrap px-6 py-4">{item.totalScore}</td>
                                 <td className="whitespace-nowrap px-6 py-4">{item.totaltapthedanhgia}</td>
                                 <td className="whitespace-nowrap px-6 py-4">
-                                    <button type="button" onClick={handleClickNX} className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Nhận xét</button>
+                                    <button type="button" onClick={() => handleClickNX(item)} className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Nhận xét</button>
                                 </td>
                             </tr>
                         ))

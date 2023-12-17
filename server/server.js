@@ -62,6 +62,7 @@ app.delete('/giaovien/xoathongbao/:magv', (req, res) => {
 })
 
 app.get('/giaovien/laydssv/:magv', (req, res) => {
+    //console.log(req.query)
     // Truy vấn tất cả các dòng trong bảng
     const sql = `SELECT students.*, lop_students.tenlop, 
                 COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
@@ -70,8 +71,8 @@ app.get('/giaovien/laydssv/:magv', (req, res) => {
                 JOIN lop AS lop_students ON students.lop_id = lop_students.id
                 JOIN teachers ON teachers.magv = lop_students.magiaovienchunhiem
                 LEFT JOIN tongdiem ON students.masv = tongdiem.username
-                WHERE teachers.magv = ?;`
-    con.query(sql, [req.params.magv], (err, results) => {
+                WHERE teachers.magv = ? AND tongdiem.hocki = ? AND tongdiem.namhoc = ?;`
+    con.query(sql, [req.params.magv, req.query.hocki, req.query.namhoc], (err, results) => {
         if (err) {
             console.error('Lỗi khi truy vấn dữ liệu:', err);
             res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
@@ -98,6 +99,25 @@ app.post('/giaovien/thongbaosv', (req, res) => {
 
 
 // truy vấn sinh vien
+
+app.get('/sinhvien/laydslop/:lop_id', (req, res) => {
+    const sql = `SELECT students.*, lop_students.tenlop, 
+                COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
+                COALESCE(tongdiem.totaltapthedanhgia, 'chưa nhập điểm') AS totaltapthedanhgia
+                FROM students
+                JOIN lop AS lop_students ON students.lop_id = lop_students.id
+                LEFT JOIN tongdiem ON students.masv = tongdiem.username
+                WHERE tongdiem.hocki = ? AND tongdiem.namhoc = ? AND students.lop_id = ?`
+    con.query(sql, [req.query.hocki, req.query.namhoc, req.params.lop_id], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        //console.log(results)
+        res.json(results);
+    });
+})
 
 app.post('/sinhvien/xlrl', async (req, res) => {
     //console.log(req.body.items)
@@ -215,9 +235,9 @@ app.get('/admin/counts', (req, res) => {
 })
 
 app.post('/admin/taods', (req, res) => {
-    const { hocki, namhoc } = req.body
-    const sqlthemdshk = 'INSERT INTO semester (hocki, namhoc) VALUES (?, ?)'
-    con.query(sqlthemdshk, [hocki, namhoc], (err, data) => {
+    const { hocki, namhoc, trangthai } = req.body
+    const sqlthemdshk = 'INSERT INTO semester (hocki, namhoc, trangthai) VALUES (?, ?, ?)'
+    con.query(sqlthemdshk, [hocki, namhoc, trangthai], (err, data) => {
         if (err) {
             console.error('Lỗi khi truy vấn dữ liệu:', err);
             res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
@@ -248,10 +268,11 @@ app.post('/admin/taohdsk', (req, res) => {
         diadiem,
         idhocki,
         time,
-        pair
+        pair,
+        trangthai
     } = req.body
-    const sql = 'INSERT INTO activities (tenhoatdong, caphoatdong, ngaydienra, thoigiandienra, diadiem, hocki_id) VALUES (?, ?, ?, ?, ?, ?)'
-    con.query(sql, [tenhoatdong, caphoatdong, pair, time, diadiem, idhocki], (err, results) => {
+    const sql = 'INSERT INTO activities (tenhoatdong, caphoatdong, ngaydienra, thoigiandienra, diadiem, hocki_id, trangthai) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    con.query(sql, [tenhoatdong, caphoatdong, pair, time, diadiem, idhocki, trangthai], (err, results) => {
         if (err) {
             console.error('Lỗi khi truy vấn dữ liệu:', err);
             res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
@@ -273,6 +294,32 @@ app.get('/admin/laydshdsk', (req, res) => {
     })
 })
 
+app.post('/admin/danhdauhoanthanh', (req, res) => {
+    const { id_1, trangthai } = req.body
+    const sql = 'UPDATE semester SET trangthai = ? WHERE id = ?'
+    con.query(sql, [trangthai, id_1], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        res.json("thêm dữ liệu thành công")
+    })
+})
+
+
+app.post('/admin/danhdauhoanthanhsk', (req, res) => {
+    const { id_1, trangthai } = req.body
+    const sql = 'UPDATE activities SET trangthai = ? WHERE id = ?'
+    con.query(sql, [trangthai, id_1], (err, results) => {
+        if (err) {
+            console.error('Lỗi khi truy vấn dữ liệu:', err);
+            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
+            return;
+        }
+        res.json("thêm dữ liệu thành công")
+    })
+})
 
 const port = 5000;
 app.listen(port, () => {
