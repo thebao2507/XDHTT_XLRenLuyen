@@ -79,15 +79,15 @@ const danhmucs = [
                         <ul className='ml-20'>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>90 '' Tổng điểm: Xuất sắc</p>
+                                <p>90 &#8804; Tổng điểm: Xuất sắc</p>
                             </li>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>80 '' Tổng điểm '' 90 điểm: Tốt</p>
+                                <p>80 &#8804; Tổng điểm &#60; 90 điểm: Tốt</p>
                             </li>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>65 '' Tổng điểm '' 80 điểm: khá</p>
+                                <p>65 &#8804; Tổng điểm &#60; 80 điểm: khá</p>
                             </li>
                         </ul>
                     </td>
@@ -95,15 +95,15 @@ const danhmucs = [
                         <ul className='ml-20'>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>50 '' Tổng điểm '' 65 điểm: TB</p>
+                                <p>50 &#8804; Tổng điểm &#60; 65 điểm: TB</p>
                             </li>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>35 '' Tổng điểm '' 50 điểm: Yếu</p>
+                                <p>35 &#8804; Tổng điểm &#60; 50 điểm: Yếu</p>
                             </li>
                             <li className='flex items-center'>
                                 <FaRegCircle className='text-[8px] w-[20px]' />
-                                <p>35 '' Tổng điểm: kém</p>
+                                <p>35 &#60; Tổng điểm: kém</p>
                             </li>
                         </ul>
                     </td>

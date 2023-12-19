@@ -11,3 +11,11 @@ FROM students
 JOIN lop AS lop_students ON students.lop_id = lop_students.id
 LEFT JOIN tongdiem ON students.masv = tongdiem.username
 WHERE tongdiem.hocki = 'học kì I' AND tongdiem.namhoc = '2023-2024'
+
+
+tất cả pass đều 123456
+admin: admin1
+giaovien: GV101,GV102,GV103
+sinhvien: 4351050001
+          4351050002
+          4351050373

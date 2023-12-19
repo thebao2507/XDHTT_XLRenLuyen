@@ -16,6 +16,7 @@ import ThongbaoSV from "./component/giangvien/ThongbaoSV";
 import QLDSDRL from "./component/Sinhvien/componentCBL/QLDSDRL";
 import DSHDLop from "./component/Sinhvien/componentCBL/DSHDLop";
 import Chitiet from "./component/Sinhvien/componentCBL/Chitiet";
+import KetquaRL from "./component/Sinhvien/KetquaRL"
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboardSV/hoatdongrenluyen',
                 element: <Hoatdong />
+            },
+            {
+                path: '/dashboardSV/ketquarl',
+                element: <KetquaRL />
             },
             {
                 path: '/dashboardSV/writeXLRL',

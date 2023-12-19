@@ -62,6 +62,19 @@ const DanhsachHDRL = () => {
         window.location.reload()
     }
 
+    const handlexoahd = (id) => {
+        const id_1 = id
+        axios.delete(`http://localhost:5000/admin/xoahdrl/${id_1}`)
+            .then((response) => {
+                alert('xóa thành công')
+                window.location.reload()
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gửi đánh giá tới máy chủ:', error);
+            })
+    }
+
     useEffect(() => {
         axios.get('http://localhost:5000/admin/laydshdsk')
             .then((response) => {
@@ -273,7 +286,7 @@ const DanhsachHDRL = () => {
                                                 </span>
                                             </td>
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
-                                                <button className='text-2xl mr-2'><AiOutlineDelete className='text-xl' /></button>
+                                                <button className='text-2xl mr-2' onClick={() => handlexoahd(item.id)}><AiOutlineDelete className='text-xl' /></button>
                                                 <button className='text-2xl' onClick={() => handleDanhdauhoanthanh(item.id)}><BiEdit className='text-xl' /></button>
                                             </td>
                                         </tr>

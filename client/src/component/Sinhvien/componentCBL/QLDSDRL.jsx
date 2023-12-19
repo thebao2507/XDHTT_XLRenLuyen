@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { FaCheck } from "react-icons/fa6";
 
 const QLDSDRL = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -39,6 +40,9 @@ const QLDSDRL = () => {
                         <th scope="col" className="px-6 py-3">
                             Action
                         </th>
+                        <th scope="col" className="px-6 py-3">
+                            TTDG
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +63,12 @@ const QLDSDRL = () => {
                                 </td>
                                 <td className="px-6 py-4">
                                     <Link to={`/dashboardSV/chitietdanhgia/${item.masv}`} target="_blank" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                                </td>
+                                <td className="px-6 py-4">
+                                    {item.trangthai === 'xong' ? (
+                                        <FaCheck />
+                                    ) : ''
+                                    }
                                 </td>
                             </tr>
                         ))

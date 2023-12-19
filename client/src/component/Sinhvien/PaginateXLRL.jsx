@@ -76,6 +76,8 @@ const evaluationItems = [
 const PanigateXLRL = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const trangthai = localStorage.getItem('trangthai')
+    const datahoc = JSON.parse(localStorage.getItem('datahocki'));
+    const d = datahoc.filter(item => item.trangthai === 'pending')
 
     const [form, setForm] = useState({
         items: evaluationItems,
@@ -97,6 +99,10 @@ const PanigateXLRL = () => {
                 }
             });
         });
+        // Nếu tổng vượt quá 100, gán giá trị total là 100
+        if (total > 100) {
+            total = 100;
+        }
         return total;
     };
 
@@ -126,7 +132,7 @@ const PanigateXLRL = () => {
 
     useEffect(() => {
         console.log(form)
-        console.log(typeof (trangthai))
+        //console.log(typeof (trangthai))
     }, [form])
 
 
@@ -135,8 +141,8 @@ const PanigateXLRL = () => {
             username: user[0].username,
             totalScore: form.totalScore,
             totallopdanhgia: form.totaltapthelopdanhgia,
-            hocki: hocki,
-            namhoc: namhoc,
+            hocki: d[0].hocki,
+            namhoc: d[0].namhoc,
             items: form.items.reduce((acc, item) => {
                 const dsmData = item.dsm.map((dsmItem) => ({
                     iddsm: dsmItem.iddsm,
@@ -170,24 +176,24 @@ const PanigateXLRL = () => {
                 <h1 className='font-bold text-center text-2xl'>PHIẾU ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN SINH VIÊN</h1>
                 <div className='flex items-center justify-center'>
                     <div className='pl-20'>
-                        <h3>HỌC KỲ: <input type="text" value={hocki} onChange={e => setHocki(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required/></h3>
+                        <h3>HỌC KỲ: <input type="text" value={d[0].hocki} className='border-b border-black outline-none bg-transparent w-1/3' required /></h3>
                     </div>
                     <div>
-                        <h3>NĂM HỌC: <input type="text" value={namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required/></h3>
+                        <h3>NĂM HỌC: <input type="text" value={d[0].namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required /></h3>
                     </div>
                 </div>
                 <div className='flex translate-x-[15%] justify-between py-2 w-[80%]'>
                     <div className='flex items-center w-[50%]'>
-                        <p className='pr-2 w-[180px]'>Họ tên sinh viên: </p>
+                        <p className='pr-2 w-[140px]'>Họ tên sinh viên: </p>
                         <input
-                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full  px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            className='w-[300px] bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
                             type="text" name="" id="" value={user[0].tensv} readOnly
                         />
                     </div>
                     <div className='flex items-center'>
                         <p className='pr-2'>Mã sinh viên: </p>
                         <input
-                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            className=' bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
                             type="text" name="" id="" value={user[0].username} readOnly
                         />
                     </div>
@@ -196,21 +202,21 @@ const PanigateXLRL = () => {
                     <div className='pr-4 flex items-center'>
                         <p className='pr-2'>Ngành học: </p>
                         <input
-                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            className=' bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
                             type="text" name="" id=""
                         />
                     </div>
                     <div className='px-4 flex items-center w-[200px]'>
                         <p className='pr-2'>Khóa: </p>
                         <input
-                            className='w-[100px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id=""
+                            className='w-[140px]  bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            type="text" name="" id="" value={user[0].khoahoc} readOnly
                         />
                     </div>
                     <div className='px-4 flex items-center'>
                         <p className='pr-2'>Lớp sinh hoạt: </p>
                         <input
-                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            className=' bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
                             type="text" name="" id=""
                         />
                     </div>
@@ -219,24 +225,24 @@ const PanigateXLRL = () => {
                 <div className="flex translate-x-[15%] w-[80%] justify-start items-center pb-2" >
                     <p className='pr-4'>Chức vụ(ban đại diện lớp, đoàn hội...): </p>
                     <input
-                        className='w-[500px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                        type="text" name="" id=""
+                        className='w-[560px] bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                        type="text" name="" id="" value={user[0].chucvu} readOnly
                     />
                 </div>
 
                 <div className='flex translate-x-[15%] justify-between pb-2 w-[80%]'>
                     <div className='flex items-center'>
-                        <p className='pr-2'><b className='pr-2 font-bold'>Kết luận</b>của Hội đồng cấp khoa: Điểm rèn luyện:</p>
+                        <p className='pr-2 w-[370px]'><b className='pr-2 font-bold'>Kết luận</b>của Hội đồng cấp khoa: Điểm rèn luyện:</p>
                         <input
-                            className='w-[160px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id=""
+                            className='w-[150px] bg-transparent border-b border-gray-300 text-gray-900 text-sm  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            type="text" name="" id="" readOnly
                         />
                     </div>
                     <div className='flex items-center'>
                         <p className='pr-2'>Xếp loại rèn luyện: </p>
                         <input
-                            className='w-[100px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id=""
+                            className='w-[160px] bg-transparent border-b border-gray-300 text-gray-900 text-sm  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
+                            type="text" name="" id="" readOnly
                         />
                     </div>
                 </div>
@@ -325,6 +331,7 @@ const PanigateXLRL = () => {
                             <p className='text-green-500'>Đã lưu rồi</p>
                         ) : (
                             <>
+                                <p className='font-semibold text-red-500'>Xem kĩ lại đánh giá trước khi nhấn Save</p>
                                 <button
                                     onClick={handleSubmit}
                                     className='text-gray-900 bg-white border border-gray-300 font-medium rounded-lg text-sx px-6 py-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:border-gray-600'>
