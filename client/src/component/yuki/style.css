@@ -1,0 +1,60 @@
+.wrap_cus {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(150deg, rgb(178, 205, 231), #fef9d7);
+    overflow: hidden;
+}
+
+.container_cus {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.bubble_cus {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 75% 30%, #fff 5px,  rgb(216, 165, 223) 8%, #f5f3f3 60%, rgb(216, 165, 223) 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 20px #fff;
+        inset: 10px 0px 46px #eaf5fc;
+        inset: 80px 0 60px #efcde6;
+        inset: -20px - 60px 100px #f9F6de,
+        0 0 90px #fff;
+    animation: bubble_cus 4s ease-in-out infinite;
+}
+
+.shadow_cus {
+    background-color: rgba(0, 0, 0, 0.15);
+    width: 150px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    left: 85%;
+    margin-left: -75%;
+    bottom: -100px;
+    filter: blur(1px);
+    animation: shadow_cus 4s ease-in-out infinite;
+}
+
+@keyframes bubble_cus {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-80px);
+    }
+}
+
+@keyframes shadow_cus {
+    0%, 100% {
+        transform: scale(0.5);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
