@@ -132,6 +132,8 @@ app.get('/sinhvien/laythongtinsinhvienedit/:masv', (req, res) => {
     });
 })
 
+
+
 app.get('/sinhvien/laydslop/:lop_id', (req, res) => {
     const sql = `SELECT students.*, lop_students.tenlop, tongdiem.trangthai,
                 COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
@@ -305,7 +307,7 @@ app.get('/sinhvien/layketqua/:masv', (req, res) => {
         res.json(results);
     });
 })
-/// truy vấn dmin
+/// truy vấn admin
 
 app.delete('/admin/xoahdrl/:id_1', (req, res) => {
     const sql = 'DELETE FROM activities WHERE id = ?'

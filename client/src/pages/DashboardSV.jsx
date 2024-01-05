@@ -8,7 +8,7 @@ const DashboardSV = () => {
     //console.log(user[0].chucvu)
     return (
         <div className='min-h-screen bg-gray-50/50'>
-            {user[0].chucvu === 'không' ? (
+            {!user ? "error" : user[0].chucvu === 'không' ? (
                 <MenuSV user={user} />
             ) : (
                 <MenuCBL />

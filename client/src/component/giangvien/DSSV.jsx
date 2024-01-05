@@ -14,7 +14,7 @@ const DSSV = () => {
     let stt = 1
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/giaovien/laydssv/${user[0].magv}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
+        axios.get(`http://localhost:5000/giaovien/laydssv/${!user ? "error" : user[0].magv}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
             .then((response) => {
                 const { data } = response
                 setDssv(data)
@@ -92,8 +92,8 @@ const DSSV = () => {
                         dssv.map(item => (
                             <tr className="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                 <td className="whitespace-nowrap px-6 py-4 font-medium">{stt++}</td>
-                                <td className="whitespace-nowrap px-6 py-4">{item.tensv}</td>
                                 <td className="whitespace-nowrap px-6 py-4">{item.masv}</td>
+                                <td className="whitespace-nowrap px-6 py-4">{item.tensv}</td>
                                 <td className="whitespace-nowrap px-6 py-4">{item.chucvu}</td>
                                 <td className="whitespace-nowrap px-6 py-4">{item.totalScore}</td>
                                 <td className="whitespace-nowrap px-6 py-4">{item.totaltapthedanhgia}</td>

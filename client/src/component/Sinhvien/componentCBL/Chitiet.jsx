@@ -223,7 +223,7 @@ const Chitiet = () => {
                                                 <td>{dsmItem.noidung}</td>
                                             </tr>
                                         </td>
-                                        <td className='w-[5%] border-2'>
+                                        <td className='w-[5%] h-[0px] border-2'>
                                             <input
                                                 type="text"
                                                 pattern="[0-9]*"
@@ -235,10 +235,10 @@ const Chitiet = () => {
                                                 //value={diemchitiet.map(item => item.studentScore)}
                                                 value={diemchitiet.find((item) => item.iddsm === dsmItem.iddsm)?.studentScore}
                                                 readOnly
-                                                className='w-full py-1.5 rounded-md text-gray-900 bg-[#EBE7E6]'
+                                                className='w-full h-full py-1.5 rounded-md text-gray-900 bg-[#EBE7E6]'
                                             />
                                         </td>
-                                        <td className='w-[5%] border-2'>
+                                        <td className='w-[5%] h-[0px] border-2'>
                                             <input
                                                 type="text"
                                                 pattern="[0-9]*"
@@ -252,10 +252,10 @@ const Chitiet = () => {
                                                 onChange={(e) =>
                                                     handleChange(e, item.idmuc, dsmItem.iddsm, 'lopdanhgia')
                                                 }
-                                                className='w-full rounded-md border-0 py-1.5 text-gray-900 bg-[#EBE7E6]'
+                                                className='w-full h-full rounded-md border-0 py-1.5 text-gray-900 bg-[#EBE7E6]'
                                             />
                                         </td>
-                                        <td className='w-[22%] border-2'>
+                                        <td className='w-[22%] h-[0px] border-2'>
                                             <input
                                                 type="text"
                                                 //value={dsmItem.note || ''}
@@ -266,7 +266,7 @@ const Chitiet = () => {
                                                 value={dsmItem.note || ''}
                                                 //value={dsmItem.note || dsmItem.note === (diemchitiet.find((item) => item.iddsm === dsmItem.iddsm)?.ghichu)}
                                                 onChange={(e) => handleChange(e, item.idmuc, dsmItem.iddsm, 'note')}
-                                                className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
+                                                className='w-full h-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
                                             />
                                         </td>
                                     </tr>

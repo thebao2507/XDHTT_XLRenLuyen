@@ -17,6 +17,7 @@ import QLDSDRL from "./component/Sinhvien/componentCBL/QLDSDRL";
 import DSHDLop from "./component/Sinhvien/componentCBL/DSHDLop";
 import Chitiet from "./component/Sinhvien/componentCBL/Chitiet";
 import KetquaRL from "./component/Sinhvien/KetquaRL"
+import PrivateRoute from "./component/auth/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children: [
             {
                 path: '/dashboard/trangchu',
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboardSV",
-        element: <DashboardSV />,
+        element: <PrivateRoute><DashboardSV /></PrivateRoute>,
         children: [
             {
                 path: '/dashboardSV/hoatdongrenluyen',
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboardGV',
-        element: <DashboardGV />,
+        element: <PrivateRoute><DashboardGV /></PrivateRoute>,
         children: [
             {
                 path: '/dashboardGV/dssv',

@@ -9,7 +9,7 @@ const ThongbaoSV = () => {
     const [title, setTitle] = useState('')
     const [yeucau, setYeucau] = useState(false)
 
-    const magv = user[0].magv
+    const magv = !user ? "error" : user[0].magv
 
     const editor = document.querySelector('.ql-editor');
     const textContent = editor ? editor.textContent : '';
@@ -26,7 +26,7 @@ const ThongbaoSV = () => {
     }
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:5000/giaovien/xoathongbao/${user[0].magv}`)
+        axios.delete(`http://localhost:5000/giaovien/xoathongbao/${!user ? "error" : user[0].magv}`)
             .then(response => {
                 alert('Xóa thông báo thành công!');
                 window.location.reload(); // Reload trang sau khi xóa thông báo thành công
@@ -37,7 +37,7 @@ const ThongbaoSV = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/giaovien/laythongbao/${user[0].magv}`)
+        axios.get(`http://localhost:5000/giaovien/laythongbao/${!user ? "error" : user[0].magv}`)
             .then((response) => {
                 const { data } = response
                 if (data.length > 0) {

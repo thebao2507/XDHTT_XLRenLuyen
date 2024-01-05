@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { BiCategory } from 'react-icons/bi'
 import { CiLogout } from 'react-icons/ci'
@@ -14,16 +14,22 @@ const Menu = () => {
         nav('/', { replace: true })
     }
 
+    const [selectedItem, setSelectedItem] = useState(0)
+
+    const handleItemClick = (index) => {
+        setSelectedItem(index)
+    }
+
     return (
         <aside className="bg-gradient-to-br from-gray-800 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
             <div className="relative border-b border-white/20">
                 <div className="flex items-center gap-4 py-6 px-8">
-                    <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">QLDRL - {user[0].username}</h6>
+                    <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">QLDRL - {!user ? "error" : user[0].username}</h6>
                 </div>
             </div>
             <div className="m-4">
                 <ul className="mb-4 flex flex-col gap-1">
-                    <li>
+                    <li className={`${selectedItem === 0 ? 'bg-blue-800 text-white' : ''}`} onClick={() => handleItemClick(0)}>
                         <Link aria-current="page" to='/dashboard/trangchu'>
                             <button className="middle none font-sans font-bold center transition-all  text-xs py-3 rounded-lg to-blue-400 text-white shadow-md hover:shadow-l w-full flex items-center gap-4 px-4 capitalize hover:bg-white/10 active:bg-white/30" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="w-5 h-5 text-inherit">
@@ -34,7 +40,7 @@ const Menu = () => {
                             </button>
                         </Link>
                     </li>
-                    <li>
+                    <li className={`${selectedItem === 1 ? 'bg-blue-800 text-white' : ''}`} onClick={() => handleItemClick(1)}>
                         <Link className="" to='/dashboard/danhsachhocky'>
                             <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <h3 className='text-xl'><BsCardChecklist /></h3>
@@ -42,7 +48,7 @@ const Menu = () => {
                             </button>
                         </Link>
                     </li>
-                    <li>
+                    <li className={`${selectedItem === 2 ? 'bg-blue-800 text-white' : ''}`} onClick={() => handleItemClick(2)}>
                         <Link className="" to='/dashboard/danhsachhoatdongrenluyen'>
                             <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="w-5 h-5 text-inherit">
@@ -52,7 +58,7 @@ const Menu = () => {
                             </button>
                         </Link>
                     </li>
-                    <li>
+                    <li className={`${selectedItem === 3 ? 'bg-blue-800 text-white' : ''}`} onClick={() => handleItemClick(3)}>
                         <Link className="" href="#">
                             <button className="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <h3 className='text-2xl'><BiCategory /></h3>

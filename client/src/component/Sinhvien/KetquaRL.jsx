@@ -6,7 +6,7 @@ const KetquaRL = () => {
     const user = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/sinhvien/layketqua/${user[0].masv}`)
+        axios.get(`http://localhost:5000/sinhvien/layketqua/${!user ? "error" : user[0].masv}`)
         .then((response) => {
             const { data } = response
             setDatarl(data)

@@ -79,15 +79,18 @@ const PanigateXLRL = () => {
     const datahoc = JSON.parse(localStorage.getItem('datahocki'));
     const d = datahoc.filter(item => item.trangthai === 'pending')
 
+    // const [selectedItem, setSelectedItem] = useState(null)
+
+    // const handleItemClick = (index) => {
+    //     setSelectedItem(index);
+    // }
+    //${dsmItem.iddsm === selectedItem ? 'h-[1px]' : '' }
+
     const [form, setForm] = useState({
         items: evaluationItems,
         totalScore: 0,
         totaltapthelopdanhgia: 0
     });
-
-    const [hocki, setHocki] = useState('')
-    const [namhoc, setNamhoc] = useState('')
-
 
     const calculateTotal = (items) => {
         let total = 0;
@@ -138,7 +141,7 @@ const PanigateXLRL = () => {
 
     const handleSubmit = () => {
         const evaluationData = {
-            username: user[0].username,
+            username: !user ? "error" : user[0].username,
             totalScore: form.totalScore,
             totallopdanhgia: form.totaltapthelopdanhgia,
             hocki: d[0].hocki,
@@ -166,9 +169,6 @@ const PanigateXLRL = () => {
         window.location.reload();
     }
 
-
-
-
     return (
         <div>
             {/*phần thông tin */}
@@ -179,7 +179,7 @@ const PanigateXLRL = () => {
                         <h3>HỌC KỲ: <input type="text" value={d[0].hocki} className='border-b border-black outline-none bg-transparent w-1/3' required /></h3>
                     </div>
                     <div>
-                        <h3>NĂM HỌC: <input type="text" value={d[0].namhoc} onChange={e => setNamhoc(e.target.value)} className='border-b border-black outline-none bg-transparent w-1/3' required /></h3>
+                        <h3>NĂM HỌC: <input type="text" value={d[0].namhoc} className='border-b border-black outline-none bg-transparent w-1/3' required /></h3>
                     </div>
                 </div>
                 <div className='flex translate-x-[15%] justify-between py-2 w-[80%]'>
@@ -187,14 +187,14 @@ const PanigateXLRL = () => {
                         <p className='pr-2 w-[140px]'>Họ tên sinh viên: </p>
                         <input
                             className='w-[300px] bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value={user[0].tensv} readOnly
+                            type="text" name="" id="" value={!user ? "error" : user[0].tensv} readOnly
                         />
                     </div>
                     <div className='flex items-center'>
                         <p className='pr-2'>Mã sinh viên: </p>
                         <input
                             className=' bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value={user[0].username} readOnly
+                            type="text" name="" id="" value={!user ? "error" : user[0].username} readOnly
                         />
                     </div>
                 </div>
@@ -210,7 +210,7 @@ const PanigateXLRL = () => {
                         <p className='pr-2'>Khóa: </p>
                         <input
                             className='w-[140px]  bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                            type="text" name="" id="" value={user[0].khoahoc} readOnly
+                            type="text" name="" id="" value={!user ? "error" : user[0].khoahoc} readOnly
                         />
                     </div>
                     <div className='px-4 flex items-center'>
@@ -226,7 +226,7 @@ const PanigateXLRL = () => {
                     <p className='pr-4'>Chức vụ(ban đại diện lớp, đoàn hội...): </p>
                     <input
                         className='w-[560px] bg-transparent border-b border-gray-300 text-gray-900 text-sx  block px-2.5 py-1 dark:bg-white-700 dark:border-gray-600  dark:text-black'
-                        type="text" name="" id="" value={user[0].chucvu} readOnly
+                        type="text" name="" id="" value={!user ? "error" : user[0].chucvu} readOnly
                     />
                 </div>
 
@@ -285,7 +285,7 @@ const PanigateXLRL = () => {
                                                     <td>{dsmItem.noidung}</td>
                                                 </tr>
                                             </td>
-                                            <td className='w-[5%] border-2'>
+                                            <td className='w-[5%] h-[0px] border-2'>
                                                 <input
                                                     type="text"
                                                     pattern="[0-9]*"
@@ -294,10 +294,10 @@ const PanigateXLRL = () => {
                                                     onChange={(e) =>
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'studentScore')
                                                     }
-                                                    className='w-full py-1.5 rounded-md text-gray-900 bg-[#EBE7E6]'
+                                                    className='w-full h-full py-1.5 rounded-md text-gray-900 bg-[#f7f4f4]'
                                                 />
                                             </td>
-                                            <td className='w-[5%] border-2'>
+                                            <td className='w-[5%] h-[0px] border-2'>
                                                 <input
                                                     type="text"
                                                     value={dsmItem.lopdanhgia || ''}
@@ -305,17 +305,19 @@ const PanigateXLRL = () => {
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'lopdanhgia')
                                                     }
                                                     readOnly
-                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
+                                                    className='w-full h-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#f7f4f4]'
                                                 />
                                             </td>
-                                            <td className='w-[22%] border-2'>
-                                                <input
+                                            <td className={`w-[26%] border-2 h-[0px]`}>
+                                                <textarea
+                                                    cols="40"
+                                                    rows="6"
                                                     type="text"
                                                     value={dsmItem.note || ''}
                                                     onChange={(e) =>
                                                         handleChange(e, item.idmuc, dsmItem.iddsm, 'note')
                                                     }
-                                                    className='w-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#EBE7E6]'
+                                                    className='w-full h-full block rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 bg-[#f7f4f4]'
                                                 />
                                             </td>
                                         </tr>

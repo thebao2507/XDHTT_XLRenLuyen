@@ -120,7 +120,7 @@ const Thongbao = () => {
     const [thongtin, setThongtin] = useState([])
     const [thongbao, setThongbao] = useState([])
 
-    const notify = () => toast(`Hello sinh viên ${user[0].tensv} !`, {
+    const notify = () => toast(`Hello sinh viên ${!user ? "error" : user[0].tensv} !`, {
         style: {
             backgroundColor: '#F7D477', // Màu nền của toast
             color: 'black' // Màu chữ của toast
@@ -142,8 +142,8 @@ const Thongbao = () => {
 
     useEffect(() => {
         Promise.all([
-            axios.get(`http://localhost:5000/sinhvien/laythongtin/${user[0].masv}`),
-            axios.get(`http://localhost:5000/sinhvien/laythongbao/${user[0].masv}`)
+            axios.get(`http://localhost:5000/sinhvien/laythongtin/${!user ? "error" : user[0].masv}`),
+            axios.get(`http://localhost:5000/sinhvien/laythongbao/${!user ? "error" : user[0].masv}`)
             // Thêm các yêu cầu Axios khác vào đây nếu cần
         ])
             .then((responses) => {
@@ -175,13 +175,13 @@ const Thongbao = () => {
             <div>
                 <p className='border-b border-black font-semibold text-xl my-5'>Thông tin sinh viên</p>
                 <div className='ml-2'>
-                    <p><b>Tên sinh viên</b>: {user[0].tensv}</p>
-                    <p><b>Mã sinh viên</b>: {user[0].username}</p>
+                    <p><b>Tên sinh viên</b>: {!user ? "error" : user[0].tensv}</p>
+                    <p><b>Mã sinh viên</b>: {!user ? "error" : user[0].username}</p>
                     {
                         thongtin.length > 0 ? (
                             <>
-                                <p><b>Ngành</b>: {thongtin[0].tenlop}</p>
-                                <p><b>lớp</b>: {thongtin[0].tennganh}</p>
+                                <p><b>Ngành</b>: {thongtin[0].tennganh}</p>
+                                <p><b>lớp</b>: {thongtin[0].tenlop}</p>
                             </>
                         ) : (
                             <p>...</p>
