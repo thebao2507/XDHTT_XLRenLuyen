@@ -13,7 +13,7 @@ const LoginSinhVien = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Xử lý đăng nhập ở đây
-        axios.post('http://localhost:5000/login', { username, password })
+        axios.post('http://localhost:8000/login', { username, password })
             .then(res => {
                 const data = res.data;
                 //console.log()
@@ -42,9 +42,6 @@ const LoginSinhVien = () => {
             })
             .catch(err => console.log(err))
     }
-
-    console.log(error)
-
     return (
         <>
             <div className='w-full h-screen flex items-start'>

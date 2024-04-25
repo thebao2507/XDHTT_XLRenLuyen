@@ -16,7 +16,7 @@ const ThongbaoSV = () => {
 
     const handleSubmit = () => {
         // console.log('cc')
-        axios.post('http://localhost:5000/giaovien/thongbaosv', {
+        axios.post('http://localhost:8000/giaovien/thongbaosv', {
             magv,
             title,
             textContent
@@ -26,7 +26,7 @@ const ThongbaoSV = () => {
     }
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:5000/giaovien/xoathongbao/${!user ? "error" : user[0].magv}`)
+        axios.delete(`http://localhost:8000/giaovien/xoathongbao/${!user ? "error" : user[0].magv}`)
             .then(response => {
                 alert('Xóa thông báo thành công!');
                 window.location.reload(); // Reload trang sau khi xóa thông báo thành công
@@ -37,7 +37,7 @@ const ThongbaoSV = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/giaovien/laythongbao/${!user ? "error" : user[0].magv}`)
+        axios.get(`http://localhost:8000/giaovien/laythongbao/${!user ? "error" : user[0].magv}`)
             .then((response) => {
                 const { data } = response
                 if (data.length > 0) {

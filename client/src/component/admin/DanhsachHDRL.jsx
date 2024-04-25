@@ -32,7 +32,7 @@ const DanhsachHDRL = () => {
 
     //console.log(convert(startDate))
     const handleTaoHDSK = () => {
-        axios.post('http://localhost:5000/admin/taohdsk', {
+        axios.post('http://localhost:8000/admin/taohdsk', {
             tenhoatdong,
             caphoatdong,
             diadiem,
@@ -52,7 +52,7 @@ const DanhsachHDRL = () => {
 
     const handleDanhdauhoanthanh = (id) => {
         const id_1 = id
-        axios.post('http://localhost:5000/admin/danhdauhoanthanhsk', { id_1, trangthai: 'success' })
+        axios.post('http://localhost:8000/admin/danhdauhoanthanhsk', { id_1, trangthai: 'success' })
             .then((response) => {
                 console.log(response.data);
             })
@@ -64,7 +64,7 @@ const DanhsachHDRL = () => {
 
     const handlexoahd = (id) => {
         const id_1 = id
-        axios.delete(`http://localhost:5000/admin/xoahdrl/${id_1}`)
+        axios.delete(`http://localhost:8000/admin/xoahdrl/${id_1}`)
             .then((response) => {
                 alert('xóa thành công')
                 window.location.reload()
@@ -76,7 +76,7 @@ const DanhsachHDRL = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:5000/admin/laydshdsk')
+        axios.get('http://localhost:8000/admin/laydshdsk')
             .then((response) => {
                 const { data } = response
                 setDshd(data)

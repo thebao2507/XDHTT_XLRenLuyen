@@ -11,7 +11,7 @@ const QLDSDRL = () => {
     const cc = datahoc.filter(item => item.trangthai === 'pending')
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/sinhvien/laydslop/${user[0].lop_id}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
+        axios.get(`http://localhost:8000/sinhvien/laydslop/${user[0].lop_id}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
             .then((response) => {
                 const { data } = response
                 setDs(data)

@@ -74,7 +74,7 @@ const Chitiet = () => {
             }, []),
         }
         //console.log(evaluationData)
-        axios.post('http://localhost:5000/sinhvien/capnhatxlrl', evaluationData)
+        axios.post('http://localhost:8000/sinhvien/capnhatxlrl', evaluationData)
             .then((response) => {
                 alert('đánh giá đã được cập nhật')
                 console.log('Đánh giá đã được lưu vào cơ sở dữ liệu.', response.config.data);
@@ -92,8 +92,8 @@ const Chitiet = () => {
 
     useEffect(() => {
         Promise.all([
-            axios.get(`http://localhost:5000/sinhvien/laychitietrl/${masv}`),
-            axios.get(`http://localhost:5000/sinhvien/laythongtinsinhvienedit/${masv}`)
+            axios.get(`http://localhost:8000/sinhvien/laychitietrl/${masv}`),
+            axios.get(`http://localhost:8000/sinhvien/laythongtinsinhvienedit/${masv}`)
             // Thêm các yêu cầu Axios khác vào đây nếu cần
         ])
             .then((responses) => {

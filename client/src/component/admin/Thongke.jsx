@@ -12,7 +12,7 @@ const Thongke = () => {
     const [userCount, setUserCount] = useState(0)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/admin/counts')
+        axios.get('http://localhost:8000/admin/counts')
         .then((response) => {
             const {studentCount, teacherCount, lopCount, userCount} = response.data
             setStudentCount(studentCount)

@@ -12,7 +12,7 @@ const Danhsachhocky = () => {
 
 
     const handletaodshk = () => {
-        axios.post('http://localhost:5000/admin/taods', { hocki, namhoc, trangthai: 'pending' })
+        axios.post('http://localhost:8000/admin/taods', { hocki, namhoc, trangthai: 'pending' })
             .then((response) => {
                 console.log(response.data);
             })
@@ -24,7 +24,7 @@ const Danhsachhocky = () => {
 
     const handleDanhdauhoanthanh = (id) => {
         const id_1 = id
-        axios.post('http://localhost:5000/admin/danhdauhoanthanh', { id_1, trangthai: 'success' })
+        axios.post('http://localhost:8000/admin/danhdauhoanthanh', { id_1, trangthai: 'success' })
             .then((response) => {
                 console.log(response.data);
             })
@@ -37,7 +37,7 @@ const Danhsachhocky = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/admin/laydshk')
+        axios.get('http://localhost:8000/admin/laydshk')
             .then((response) => {
                 const { data } = response
                 setDshk(data)

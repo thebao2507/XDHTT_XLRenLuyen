@@ -14,7 +14,7 @@ const DSSV = () => {
     let stt = 1
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/giaovien/laydssv/${!user ? "error" : user[0].magv}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
+        axios.get(`http://localhost:8000/giaovien/laydssv/${!user ? "error" : user[0].magv}?hocki=${cc[0].hocki}&namhoc=${cc[0].namhoc}`)
             .then((response) => {
                 const { data } = response
                 setDssv(data)
@@ -27,7 +27,7 @@ const DSSV = () => {
     const masv = tt.masv
 
     const handleNhanxet = () => {
-        axios.post('http://localhost:5000/giaovien/nhanxetsinhvien', { nhanxet, masv })
+        axios.post('http://localhost:8000/giaovien/nhanxetsinhvien', { nhanxet, masv })
             .then((response) => {
                 alert('đã gửi nhận xét')
                 window.location.reload()
