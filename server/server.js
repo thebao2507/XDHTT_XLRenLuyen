@@ -47,7 +47,6 @@ app.delete('/giaovien/xoathongbao/:magv', (req, res) => {
 })
 
 app.get('/giaovien/laydssv/:magv', (req, res) => {
-    //console.log(req.query)
     // Truy vấn tất cả các dòng trong bảng
     const sql = `SELECT students.*, lop_students.tenlop, tongdiem.nhanxetcuagv,
                 COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
@@ -118,7 +117,6 @@ app.get('/sinhvien/laythongtinsinhvienedit/:masv', (req, res) => {
 })
 
 
-
 app.get('/sinhvien/laydslop/:lop_id', (req, res) => {
     const sql = `SELECT students.*, lop_students.tenlop, tongdiem.trangthai,
                 COALESCE(tongdiem.totalScore, 'chưa nhập điểm') AS totalScore, 
@@ -133,7 +131,6 @@ app.get('/sinhvien/laydslop/:lop_id', (req, res) => {
             res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
             return;
         }
-        //console.log(results)
         res.json(results);
     });
 })
@@ -189,7 +186,6 @@ app.post('/sinhvien/capnhatxlrl', async (req, res) => {
 })
 
 app.post('/sinhvien/xlrl', async (req, res) => {
-    //console.log(req.body.items)
     const { username, totalScore, totallopdanhgia, items, hocki, namhoc } = req.body
     // lưu vào table chitietxeploai
     const sqlChitiet = 'INSERT INTO chitietxeploairenluyen (username, iddsm, studentScore, lopdanhgia, ghichu) VALUES (?, ?, ?, ?, ?)'
@@ -240,10 +236,6 @@ app.post('/sinhvien/xlrl', async (req, res) => {
         console.error('Lỗi khi truy vấn dữ liệu:', err);
         res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
     }
-
-    // thực hiện lưu thông tin total vào table tongdiem
-
-    //console.log(req.body)
 })
 
 app.get('/sinhvien/laythongtin/:masv', (req, res) => {

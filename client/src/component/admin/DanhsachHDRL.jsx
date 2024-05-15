@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import { parse, format } from 'date-fns';
+import './danhsachHDRL.css'
 
 const DanhsachHDRL = () => {
     const [startDate, setStartDate] = useState(null);
@@ -17,9 +18,8 @@ const DanhsachHDRL = () => {
     const [caphoatdong, setCaphoatdong] = useState('')
     const [idhocki, setIdhocki] = useState(0)
     const [dshd, setDshd] = useState([])
+    const [table, setTable] = useState(false)
     const datahocki = JSON.parse(localStorage.getItem('datahocki'))
-
-    //console.log(idhocki)
 
     const convert = (str) => {
         var date = new Date(str),
@@ -30,7 +30,11 @@ const DanhsachHDRL = () => {
 
     const pair = `${convert(startDate)}-${convert(endDate)}`
 
-    //console.log(convert(startDate))
+    const handleOnTable = async () => {
+        setTable(true)
+        //alert(table)
+    }
+
     const handleTaoHDSK = () => {
         axios.post('http://localhost:8000/admin/taohdsk', {
             tenhoatdong,
@@ -110,96 +114,121 @@ const DanhsachHDRL = () => {
                         </svg>
                         <input className="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
                     </div>
+                    <div className='ml-2'>
+                        <button
+                            className='p-2 h-10 bg-cyan-600 rounded-md text-white'
+                            onClick={() => handleOnTable()}
+                        >
+                            Tạo hoạt động
+                        </button>
+                    </div>
                 </div>
             </div>
             <div>
-                <div>
-                    <p className='mb-5 text-center'>Thêm hoạt động</p>
-                    <div className='my-2 flex w-full items-center justify-between'>
-                        <div className='flex items-center'>
-                            <label htmlFor="" className='w-2/3 font-semibold'>Tên Hoạt động</label>
-                            <input
-                                type="text"
-                                className="ml-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5 "
-                                onChange={e => setTenhoatdong(e.target.value)}
-                            />
-                        </div>
-                        <div className='flex items-center'>
-                            <label htmlFor="" className='w-[150px] font-semibold'>Cấp hoạt động</label>
-                            <select
-                                id="countries"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sx rounded-lg w-3/4 p-1.5 "
-                                onChange={e => setCaphoatdong(e.target.value)}
-                            >
-                                <option selected>Chọn cấp hoạt động</option>
-                                <option value="Cấp tỉnh">Cấp tỉnh</option>
-                                <option value="Cấp trường">Cấp trường</option>
-                                <option value="Cấp khoa">Cấp khoa</option>
-                                <option value="Cấp lớp">Cấp lớp</option>
-                            </select>
-                        </div>
-                        <div className='flex items-center'>
-                            <label className='w-1/3 font-semibold'>Địa điểm</label>
-                            <input
-                                type="text"
-                                className="ml-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-3/4 p-1.5 "
-                                onChange={e => setDiadiem(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <div className='my-2 flex items-center justify-between'>
-                            <div className='flex items-center'>
-                                <label className='font-semibold'>Từ ngày:</label>
-                                <DatePicker
-                                    selected={startDate}
-                                    onChange={date => setStartDate(date)}
-                                    className='bg-gray-100 ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5'
-                                    dateFormat="yyyy/MM/dd"
+                {
+                    table ? (<div className='fixed top-0 left-10 bg-black/[.54] w-[110%] h-[100%] flex items-center justify-center'>
+                        <div className='bg-white p-5 rounded-3xl table_hdrl w-[40%]'>
+                            <p className='mb-10 mt-5 text-center text-2xl font-sans tracking-wide'>Thêm hoạt động</p>
+                            {/* <div className='my-2 flex w-full items-center justify-between'> */}
+                            <div className='flex justify-between items-center'>
+                                <label htmlFor="" className='mb-4 p-4 text-lg  text-gray-600'>TÊN HOẠT ĐỘNG:</label>
+                                <input
+                                    type="text"
+                                    className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-[70%] p-4 "
+                                    onChange={e => setTenhoatdong(e.target.value)}
+                                    placeholder='TÊN HOẠT ĐỘNG?'
                                 />
                             </div>
-
-                            <div className='flex items-center'>
-                                <label className='font-semibold'>Đến ngày:</label>
-                                <DatePicker
-                                    selected={endDate}
-                                    onChange={date => setEndDate(date)}
-                                    className='bg-gray-100 ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5'
-                                    dateFormat="yyyy/MM/dd"
+                            <div className='flex justify-between items-center'>
+                                <label htmlFor="" className='mb-4 p-4 text-lg  text-gray-600'>ĐỊA ĐIỂM:</label>
+                                <input
+                                    type="text"
+                                    className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-[70%] p-4 "
+                                    onChange={e => setDiadiem(e.target.value)}
+                                    placeholder='ĐỊA ĐIỂM?'
                                 />
                             </div>
-                            <div className='flex items-center '>
-                                <label className='mr-2 font-semibold'>Thời gian:</label>
-                                <TimePicker
-                                    value={time}
-                                    onChange={setTime}
-                                />
-                            </div>
-                            <div className='flex items-center w-[180px]'>
-                                <label htmlFor="" className='font-semibold'>HK-NH</label>
+                            <div className='flex justify-between items-center'>
+                                <label htmlFor="" className='mb-4 p-4 text-lg  text-gray-600'>CẤP HOẠT ĐỘNG:</label>
                                 <select
                                     id="countries"
-                                    className="ml-1 bg-gray-50 border border-gray-300 text-gray-900 text-sx rounded-lg w-2/3 p-1.5 "
-                                    onChange={e => setIdhocki(e.target.value)}
+                                    className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-[70%] p-4 pr-10"
+                                    onChange={e => setCaphoatdong(e.target.value)}
                                 >
-                                    {
-                                        datahocki.map(item => (
-                                            <option value={item.id}>{item.hocki} {item.namhoc}</option>
-                                        ))
-                                    }
+                                    <option selected>Chọn cấp hoạt động</option>
+                                    <option value="Cấp tỉnh">Cấp tỉnh</option>
+                                    <option value="Cấp trường">Cấp trường</option>
+                                    <option value="Cấp khoa">Cấp khoa</option>
+                                    <option value="Cấp lớp">Cấp lớp</option>
                                 </select>
                             </div>
+                            {/* </div> */}
+                            <div>
+                                <div className='my-2 flex items-center justify-between'>
+                                    <div className='flex justify-between items-center'>
+                                        <label className='mb-4 p-4 text-lg text-gray-600'>Từ ngày:</label>
+                                        <DatePicker
+                                            selected={startDate}
+                                            onChange={date => setStartDate(date)}
+                                            className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-full p-4 "
+                                            dateFormat="yyyy/MM/dd"
+                                        />
+                                    </div>
+
+                                    <div className='flex justify-between items-center'>
+                                        <label className='mb-4 p-4 text-lg  text-gray-600'>Đến ngày:</label>
+                                        <DatePicker
+                                            selected={endDate}
+                                            onChange={date => setEndDate(date)}
+                                            className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-full p-4 "
+                                            dateFormat="yyyy/MM/dd"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex items-center justify-between'>
+                                <div className='flex items-center '>
+                                    <label className='mb-4 p-4 text-lg  text-gray-600'>THỜI GIAN:</label>
+                                    <TimePicker
+                                        value={time}
+                                        className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-full p-4 "
+                                        onChange={setTime}
+                                    />
+                                </div>
+                                <div className='flex items-center'>
+                                    <label className='mb-4 p-4 text-lg  text-gray-600'>HỌC KÌ-NĂM HỌC:</label>
+                                    <select
+                                        id="countries"
+                                        className="mb-4 outline-1 outline-gray-300 bg-gray-100 border-[0px] border-gray-100 focus:border-slate-100 text-gray-500 text-lg rounded-xl w-full p-4 "
+                                        onChange={e => setIdhocki(e.target.value)}
+                                    >
+                                        {
+                                            datahocki.map(item => (
+                                                <option value={item.id}>{item.hocki} {item.namhoc}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="text-center">
+                                <button
+                                    className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                                    onClick={handleTaoHDSK}
+                                >
+                                    Create
+                                </button>
+                                <button
+                                    className="bg-indigo-600 px-4 ml-2 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                                    onClick={() => setTable(false)}
+                                >
+                                    Hide
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="text-center">
-                    <button
-                        className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
-                        onClick={handleTaoHDSK}
-                    >
-                        Create
-                    </button>
-                </div>
+
+                    </div>)
+                        : (<h1></h1>)
+                }
             </div>
             <div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

@@ -142,8 +142,8 @@ const Thongbao = () => {
 
     useEffect(() => {
         Promise.all([
-            axios.get(`http://localhost:5000/sinhvien/laythongtin/${!user ? "error" : user[0].masv}`),
-            axios.get(`http://localhost:5000/sinhvien/laythongbao/${!user ? "error" : user[0].masv}`)
+            axios.get(`http://localhost:8000/sinhvien/laythongtin/${!user ? "error" : user[0].masv}`),
+            axios.get(`http://localhost:8000/sinhvien/laythongbao/${!user ? "error" : user[0].masv}`)
             // Thêm các yêu cầu Axios khác vào đây nếu cần
         ])
             .then((responses) => {

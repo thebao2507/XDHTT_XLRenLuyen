@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import hinh from '../../assets/ba3d4cf26383465c7fcd6e6ac4809f5d.jpg'
+import '../login/login.css'
 
 const LoginSinhVien = () => {
     const navigate = useNavigate()
@@ -36,21 +38,18 @@ const LoginSinhVien = () => {
                         navigate('/dashboard/trangchu')
                     }
                 }
-                //console.log("tai khoan mat khau ko hop le")
-                setErorr(1)
-                //toast.error("tài khoản hoặc mật khẩu không hợp lệ")
             })
-            .catch(err => console.log(err))
+            .catch(err => setErorr(1))
     }
     return (
         <>
             <div className='w-full h-screen flex items-start'>
-                <div className='relative w-1/2 h-full flex flex-col'>
-                    <img src="https://i.pinimg.com/originals/ba/3d/4c/ba3d4cf26383465c7fcd6e6ac4809f5d.jpg" alt="hinh" className='w-full h-full object-cover' />
+                <div className='relative w-1/2 h-full flex flex-col slide-y-l'>
+                    <img src={hinh} alt="hinh" className='w-full h-full object-cover' />
                 </div>
 
-                <div className='w-1/2 h-full bg-[#E0E0E0] flex flex-col p-20 justify-between'>
-                    <div className="w-full flex flex-col">
+                <div className='w-1/2 h-full bg-[#E0E0E0] flex flex-col p-20 justify-between slide-y-r'>
+                    <div className="w-full flex flex-col translate-y-1/2">
                         <div className="px-8 rounded-xl">
                             <h1 className="font-medium text-2xl mt-3 text-center">Login</h1>
                             <form action="" className="mt-6" onSubmit={handleSubmit}>

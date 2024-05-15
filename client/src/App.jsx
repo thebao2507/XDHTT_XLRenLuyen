@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import Dashboard from "./pages/Dashboard";
 import Thongke from "./component/admin/Thongke";
 import Danhsachhocky from "./component/admin/Danhsachhocky";

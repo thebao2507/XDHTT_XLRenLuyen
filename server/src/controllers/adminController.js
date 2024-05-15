@@ -1,26 +1,21 @@
 import con from "../configs/database.js";
+import { getStatistical } from '../services/adminService.js'
 
 export const count = async (req, res) => {
-    const sqlGetCount = `SELECT 
-                            (SELECT COUNT(*) FROM students) AS sc,
-                            (SELECT COUNT(*) FROM teachers) AS tc,
-                            (SELECT COUNT(*) FROM lop) AS lc,
-                            (SELECT COUNT(*) FROM users) AS uc
-                        `
-    con.query(sqlGetCount, (err, data) => {
-        if (err) {
-            console.error('Lỗi khi truy vấn dữ liệu:', err);
-            res.status(500).json({ error: 'Lỗi khi truy vấn dữ liệu' });
-            return;
+    try {
+        const data = await getStatistical()
+        if (data.length > 0) {
+            const studentCount = data[0].sc
+            const teacherCount = data[0].tc
+            const lopCount = data[0].lc
+            const userCount = data[0].uc
+            return res.status(200).json({ studentCount, teacherCount, lopCount, userCount })
+        } else {
+            return res.status(404).json("no record")
         }
-        const studentCount = data[0].sc
-        const teacherCount = data[0].tc
-        const lopCount = data[0].lc
-        const userCount = data[0].uc
-        console.log(studentCount)
-
-        res.json({ studentCount, teacherCount, lopCount, userCount })
-    })
+    } catch (error) {
+        return res.status(501).json(error)
+    }
 }
 
 export const laydshdsk = async (req, res) => {

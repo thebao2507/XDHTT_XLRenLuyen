@@ -157,7 +157,7 @@ const PanigateXLRL = () => {
             }, []),
         }
         //console.log(evaluationData)
-        axios.post('http://localhost:5000/sinhvien/xlrl', evaluationData)
+        axios.post('http://localhost:8000/sinhvien/xlrl', evaluationData)
             .then((response) => {
                 console.log('Đánh giá đã được lưu vào cơ sở dữ liệu.', response.config.data);
             })
